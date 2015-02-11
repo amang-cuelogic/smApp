@@ -8,6 +8,11 @@ var SmActions = {
 			credentials: credentials
 		});
 	},
+	updates: function(credentials) {
+		AppDispatcher.dispatch({
+			actionType: SmConstants.SM_UPDATE,
+		});
+	},
 
 };
 module.exports = SmActions;
