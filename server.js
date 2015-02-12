@@ -20,6 +20,7 @@ app.use(app.router);
 
 app.get('/', routes.index);
 app.post('/login', routes.login);
+app.post('/getuser', routes.getuser);
 
 module.exports = app;
 http.createServer(app).listen(3000);

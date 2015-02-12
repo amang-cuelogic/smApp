@@ -13,13 +13,18 @@ var App = React.createClass({
 
   render: function() {
   	return (
-      <div>
+      <div className="container">
         <header>
-          <ul>
+          <div className="heading">
+          <h2>School Management System</h2>
+          </div>
+          <div id="navbar" className="navbar-collapse collapse">
+          <ul className="nav navbar-nav">
             <li><Link to="app">Login</Link></li>
             <li><Link to="home">Home</Link></li>
             <li><Link to="logout">Logout</Link></li>
           </ul>
+          </div>
         </header>
         
         <RouteHandler/>
@@ -32,6 +37,7 @@ var App = React.createClass({
 var routes = (
   <Route name="app" path="/" handler={App}>
     <Route  name="home" handler={SmHomeApp}/>
+    <Route  name="login" handler={SmLoginApp}/>
     <Route  name="logout" handler={SmLogoutApp}/>
     <DefaultRoute handler={SmLoginApp}/>
   </Route>

@@ -19,7 +19,7 @@ var SmLoginApp = React.createClass({
     return {
       username: this.refs.username || '',
       password: this.refs.password || '',
-      message: this.refs.message || ''
+      error: this.refs.error || 'Please Login'
     };
   },
   _onChangeUsername: function(e) {
@@ -45,16 +45,13 @@ var SmLoginApp = React.createClass({
   render: function() {
   	return (
       <div>
-        <div className="heading">
-        <h2>School Management System - Login</h2>
-        </div>
-        <form className="LoginForm" encType="multipart/form-data">
-        <p className="alert alert-danger">{this.state.error}</p>
+        <form className="form-signin" encType="multipart/form-data">
+          <p className="alert alert-danger">{this.state.error}</p>
           <div className="form-group">
-          <input type="text" ref="username" placeholder="Your Username" onChange={this._onChangeUsername} className="form-control" />
-          <input type="password" ref="password" placeholder="Your password" onChange={this._onChangePassword} className="form-control" />
+          <input type="text" ref="username" id="inputEmail" className="form-control" placeholder="Your Username" onChange={this._onChangeUsername} className="form-control" />
+          <input type="password" ref="password" id="inputPassword" className="form-control" placeholder="Your password" onChange={this._onChangePassword} className="form-control" />
           </div>
-          <input type="button"  onClick={this.handleSubmit} value="Login" className="btn btn-danger"/>
+          <input type="button"  onClick={this.handleSubmit} value="Login" className="btn btn-lg btn-primary btn-block"/>
       </form>
       </div>
   	);
@@ -72,7 +69,7 @@ var SmLoginApp = React.createClass({
     if(userDetails.users._id==0){
       this.setState({error : 'Enter the correct username and password'})
     }else{
-      $.cookie("userinfo", userDetails); 
+      $.cookie("userinfo", userDetails.users._id); 
       this.transitionTo('home');
     }
   }

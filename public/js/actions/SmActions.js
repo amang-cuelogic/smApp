@@ -16,9 +16,17 @@ var SmActions = {
 		});
 		
 	},
-	updates: function(credentials) {
-		AppDispatcher.dispatch({
-			actionType: SmConstants.SM_UPDATE,
+	getCurrentUserDetails: function(userid) {
+		var data = userid;
+
+		$.post("http://localhost:3000/getuser", {data : data}).
+			success(function(data) {console.log(data)
+				if(data){
+					AppDispatcher.dispatch({
+						actionType: SmConstants.SM_GETDETAIL,
+						data: data
+					});
+				}
 		});
 	},
 

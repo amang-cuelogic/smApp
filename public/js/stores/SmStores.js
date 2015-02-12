@@ -10,31 +10,26 @@ var CHANGE_EVENT = 'change';
 var _result = {};
 
 function validateLogin(userinfo){
-  //console.log(userinfo); return false
-
 }
 
 // Register callback to handle all updates
-AppDispatcher.register(function(action) {console.log(action);
+AppDispatcher.register(function(action) {
   switch(action.actionType) {
 
     case SmConstants.SM_LOGIN:
       _result = action.data;
       break;
-    case SmConstants.SM_UPDATE:
-      _result = _result;
-      //
+    case SmConstants.SM_GETDETAIL:
+      _result = action.data;
       break;
 
     default:
-      // no op
+      return true;
   }
   SmStore.emitChange();
-  //console.log(SmStore.getResult());
 });
 
 var SmStore = assign({}, EventEmitter.prototype, {
-  // Returns all shoes
   getResult: function() {
     return _result;
   },

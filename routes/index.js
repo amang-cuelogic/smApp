@@ -31,6 +31,28 @@ exports.login = function(req, res){
 	});
 };
 
+exports.getuser = function(req, res){
+	
+    var id = JSON.parse(req.body.data)._id;
+    
+	if (id == '') {
+	    return res.send({error : 'error',_id :0});
+	}
+
+	userData.findOne({'_id' : '1'}, function(err, user){
+	    if (err) {
+	        console.log(err);
+	        return res.send({error : 'error',_id :0});
+	    }else{	
+	    	if (user==null){
+		    	return res.send({error : 'error',_id :0});
+			}else{
+				return res.send(user);
+			}
+	    }
+	});
+};
+
 function GenerateCookie() {
 	var cookieHash = generator();
 	return cookieHash
