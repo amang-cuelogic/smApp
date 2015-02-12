@@ -1,16 +1,20 @@
 var React = require('react');
 var SmActions = require('../actions/SmActions');
 var SmStores = require('../stores/SmStores');
-var Link = require('react-router-component').Link;
+var Navigation = require('react-router').Navigation;
+var SmCookie = require('../mixins/cookie');
 
 function getSmState() {
   //console.log(SmStores.getResult());
   return {
-    message: SmStores.getResult()
+    users: SmStores.getResult()
   };
 }
 
 var SmLoginApp = React.createClass({
+
+  mixins : [Navigation,SmCookie],
+
   getInitialState: function() {
     return {
       username: this.refs.username || '',
@@ -30,6 +34,7 @@ var SmLoginApp = React.createClass({
   },
 
   componentDidMount: function() {
+    this.checkCookie();
     SmStores.addChangeListener(this._onChange);
   },
 
@@ -42,10 +47,9 @@ var SmLoginApp = React.createClass({
       <div>
         <div className="heading">
         <h2>School Management System - Login</h2>
-        <Link href="/home">Home</Link>
         </div>
         <form className="LoginForm" encType="multipart/form-data">
-        <h1>{this.state.message}</h1>
+        <p className="alert alert-danger">{this.state.error}</p>
           <div className="form-group">
           <input type="text" ref="username" placeholder="Your Username" onChange={this._onChangeUsername} className="form-control" />
           <input type="password" ref="password" placeholder="Your password" onChange={this._onChangePassword} className="form-control" />
@@ -64,8 +68,13 @@ var SmLoginApp = React.createClass({
   },
 
   _onChange: function() {
-
-    this.setState(getSmState());
+    var userDetails = getSmState();
+    if(userDetails.users._id==0){
+      this.setState({error : 'Enter the correct username and password'})
+    }else{
+      $.cookie("userinfo", userDetails); 
+      this.transitionTo('home');
+    }
   }
 
 });

@@ -10,31 +10,16 @@ var CHANGE_EVENT = 'change';
 var _result = {};
 
 function validateLogin(userinfo){
-  //console.log(userinfo); return false;
-  var data = JSON.stringify(userinfo);
-  
-  $.post("http://localhost:3000/login", {data : data}, {async: false}).
-  success(function(data) {
-    _result = data;
-    SmActions.updates(); 
-    Router.Navigation.contextTypes.goBack('/home');
-  });
+  //console.log(userinfo); return false
 
 }
 
 // Register callback to handle all updates
-AppDispatcher.register(function(action) {
-  var credentials;
+AppDispatcher.register(function(action) {console.log(action);
   switch(action.actionType) {
 
     case SmConstants.SM_LOGIN:
-
-      username = action.credentials.username;
-      password = action.credentials.password;
-      if (username !== '' && password !== '') {
-        validateLogin(action.credentials);
-      }
-      //
+      _result = action.data;
       break;
     case SmConstants.SM_UPDATE:
       _result = _result;

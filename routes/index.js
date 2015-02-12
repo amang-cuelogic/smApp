@@ -7,26 +7,24 @@ exports.index = function(req, res){
 
 exports.login = function(req, res){
 	
-    var username = req.body.data.username;
-    var password = req.body.data.password;
+    var username = JSON.parse(req.body.data).username;
+    var password = JSON.parse(req.body.data).password;
 	if (username == '' || password == '') {
-	    return res.send(401,'Enter the correct username and password');
+	    return res.send({error : 'error',_id :0});
 	}
 
 	userData.findOne({'username' : username}, function(err, user){
 	    if (err) {
 	        console.log(err);
-	        return res.send(401,'Enter the correct username and password');
-	    }else{
-	    	//console.log(user)
-	    	//console.log(user[0].username)	    	
+	        return res.send({error : 'error',_id :0});
+	    }else{	
 	    	if (user==null){
-		    	return res.send({error : 'error'});
+		    	return res.send({error : 'error',_id :0});
 			}else{
 				if (username === user.username && password === user.password) {
 					return res.send(user);
 				}else{
-					return res.send({error : 'error'});
+					return res.send({error : 'error',_id :0});
 				} 
 			}
 	    }
